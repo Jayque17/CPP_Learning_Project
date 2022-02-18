@@ -6,22 +6,82 @@ Compilez et lancez le programme.
 
 Allez dans le fichier `tower_sim.cpp` et recherchez la fonction responsable de gérer les inputs du programme.
 Sur quelle touche faut-il appuyer pour ajouter un avion ?
+
+- c
+
 Comment faire pour quitter le programme ?
+
+- q ou x
+
 A quoi sert la touche 'F' ?
+
+- passer en fullscreen
 
 Ajoutez un avion à la simulation et attendez.
 Que est le comportement de l'avion ?
+
+- il fait des tours, il attéri, se garre puis repart.
+
 Quelles informations s'affichent dans la console ?
+
+```bash
+KL6197 is now landing...
+now servicing KL6197...
+done servicing KL6197
+KL6197 lift off
+```
 
 Ajoutez maintenant quatre avions d'un coup dans la simulation.
 Que fait chacun des avions ?
+
+- les 3 premiers avions font ce que j'ai décrit avant. Le 4ème lui fait des tours jusqu'à ce que le premier avion reparte. Le dernier avion peut donc attérrir et faire comme les autres. Ce paterne se relance en boucle.
 
 ## B- Analyse du code
 
 Listez les classes du programme à la racine du dossier src/.
 Pour chacune d'entre elle, expliquez ce qu'elle représente et son rôle dans le programme.
 
+```c
+struct AircraftType -> structure qui génère les types d'avions
+class Aircraft -> classe qui génère les avions
+class AirportType -> classe qui génère les types d'aéroports
+class Airport -> classe qui génère les aéroports
+struct Point2D -> structure qui génère un point en 2D
+struct Point3D -> structure qui génère un point en 3D
+struct Runway -> structure qui génère une piste d'attérisage
+class Terminal -> classe qui génère un terminal d'aéroport
+class Tower -> classe qui génère une tour de contrôle
+enum WaypointType -> enum qui génère les types de destinations
+class Waypoint -> classe qui génère une destination
+```
+
 Pour les classes `Tower`, `Aircaft`, `Airport` et `Terminal`, listez leurs fonctions-membre publiques et expliquez précisément à quoi elles servent.
+
+```c
+class Tower
+    get_instructions
+    arrived_at_terminal
+
+class Aircraft
+    get_flight_num -> renvoie le numéro de vol "flight_numer"
+    distance_to -> renvoie la distance entre le point "p" et le point "pos"
+    display -> affiche le dessin de l'avion dans la fenêtre
+    move -> déplace le point pos de l'avion
+
+class Airport
+    get_tower -> renvoi un l'objet "tower" dont Airport est owner
+    display -> affiche le dessin de l'aéroport dans la fenêtre
+    move -> applique la méthode move sur chaque terminal dans "terminals" dont Airport est owner
+
+class Terminal
+    in_use
+    is_servicing
+    assign_craft
+    start_service
+    finish_service
+    move
+```
+
 Réalisez ensuite un schéma présentant comment ces différentes classes intéragissent ensemble.
 
 Quelles classes et fonctions sont impliquées dans la génération du chemin d'un avion ?
@@ -30,42 +90,42 @@ Expliquez les intérêts de ce choix.
 
 ## C- Bidouillons !
 
-1) Déterminez à quel endroit du code sont définies les vitesses maximales et accélération de chaque avion.
-Le Concorde est censé pouvoir voler plus vite que les autres avions.
-Modifiez le programme pour tenir compte de cela.
+1. Déterminez à quel endroit du code sont définies les vitesses maximales et accélération de chaque avion.
+   Le Concorde est censé pouvoir voler plus vite que les autres avions.
+   Modifiez le programme pour tenir compte de cela.
 
-2) Identifiez quelle variable contrôle le framerate de la simulation.
-Ajoutez deux nouveaux inputs au programme permettant d'augmenter ou de diminuer cette valeur.
-Essayez maintenant de mettre en pause le programme en manipulant ce framerate. Que se passe-t-il ?\
-Ajoutez une nouvelle fonctionnalité au programme pour mettre le programme en pause, et qui ne passe pas par le framerate.
+2. Identifiez quelle variable contrôle le framerate de la simulation.
+   Ajoutez deux nouveaux inputs au programme permettant d'augmenter ou de diminuer cette valeur.
+   Essayez maintenant de mettre en pause le programme en manipulant ce framerate. Que se passe-t-il ?\
+   Ajoutez une nouvelle fonctionnalité au programme pour mettre le programme en pause, et qui ne passe pas par le framerate.
 
-3) Identifiez quelle variable contrôle le temps de débarquement des avions et doublez-le.
+3. Identifiez quelle variable contrôle le temps de débarquement des avions et doublez-le.
 
-4) Lorsqu'un avion a décollé, il réattérit peu de temps après.
-Faites en sorte qu'à la place, il soit retiré du programme.\
-Indices :\
-A quel endroit pouvez-vous savoir que l'avion doit être supprimé ?\
-Pourquoi n'est-il pas sûr de procéder au retrait de l'avion dans cette fonction ?
-A quel endroit de la callstack pourriez-vous le faire à la place ?\
-Que devez-vous modifier pour transmettre l'information de la première à la seconde fonction ?
+4. Lorsqu'un avion a décollé, il réattérit peu de temps après.
+   Faites en sorte qu'à la place, il soit retiré du programme.\
+   Indices :\
+   A quel endroit pouvez-vous savoir que l'avion doit être supprimé ?\
+   Pourquoi n'est-il pas sûr de procéder au retrait de l'avion dans cette fonction ?
+   A quel endroit de la callstack pourriez-vous le faire à la place ?\
+   Que devez-vous modifier pour transmettre l'information de la première à la seconde fonction ?
 
-5) Lorsqu'un objet de type `Displayable` est créé, il faut ajouter celui-ci manuellement dans la liste des objets à afficher.
-Il faut également penser à le supprimer de cette liste avant de le détruire.
-Faites en sorte que l'ajout et la suppression de `display_queue` soit "automatiquement gérée" lorsqu'un `Displayable` est créé ou détruit.
-Pourquoi n'est-il pas spécialement pertinent d'en faire de même pour `DynamicObject` ?
+5. Lorsqu'un objet de type `Displayable` est créé, il faut ajouter celui-ci manuellement dans la liste des objets à afficher.
+   Il faut également penser à le supprimer de cette liste avant de le détruire.
+   Faites en sorte que l'ajout et la suppression de `display_queue` soit "automatiquement gérée" lorsqu'un `Displayable` est créé ou détruit.
+   Pourquoi n'est-il pas spécialement pertinent d'en faire de même pour `DynamicObject` ?
 
-6) La tour de contrôle a besoin de stocker pour tout `Aircraft` le `Terminal` qui lui est actuellement attribué, afin de pouvoir le libérer une fois que l'avion décolle.
-Cette information est actuellement enregistrée dans un `std::vector<std::pair<const Aircraft*, size_t>>` (size_t représentant l'indice du terminal).
-Cela fait que la recherche du terminal associé à un avion est réalisée en temps linéaire, par rapport au nombre total de terminaux.
-Cela n'est pas grave tant que ce nombre est petit, mais pour préparer l'avenir, on aimerait bien remplacer le vector par un conteneur qui garantira des opérations efficaces, même s'il y a beaucoup de terminaux.\
-Modifiez le code afin d'utiliser un conteneur STL plus adapté. Normalement, à la fin, la fonction `find_craft_and_terminal(const Aicraft&)` ne devrait plus être nécessaire.
+6. La tour de contrôle a besoin de stocker pour tout `Aircraft` le `Terminal` qui lui est actuellement attribué, afin de pouvoir le libérer une fois que l'avion décolle.
+   Cette information est actuellement enregistrée dans un `std::vector<std::pair<const Aircraft*, size_t>>` (size_t représentant l'indice du terminal).
+   Cela fait que la recherche du terminal associé à un avion est réalisée en temps linéaire, par rapport au nombre total de terminaux.
+   Cela n'est pas grave tant que ce nombre est petit, mais pour préparer l'avenir, on aimerait bien remplacer le vector par un conteneur qui garantira des opérations efficaces, même s'il y a beaucoup de terminaux.\
+   Modifiez le code afin d'utiliser un conteneur STL plus adapté. Normalement, à la fin, la fonction `find_craft_and_terminal(const Aicraft&)` ne devrait plus être nécessaire.
 
 ## D- Théorie
 
-1) Comment a-t-on fait pour que seule la classe `Tower` puisse réserver un terminal de l'aéroport ?
+1. Comment a-t-on fait pour que seule la classe `Tower` puisse réserver un terminal de l'aéroport ?
 
-2) En regardant le contenu de la fonction `void Aircraft::turn(Point3D direction)`, pourquoi selon-vous ne sommes-nous pas passer par une réference ?
-Pensez-vous qu'il soit possible d'éviter la copie du `Point3D` passé en paramètre ?
+2. En regardant le contenu de la fonction `void Aircraft::turn(Point3D direction)`, pourquoi selon-vous ne sommes-nous pas passer par une réference ?
+   Pensez-vous qu'il soit possible d'éviter la copie du `Point3D` passé en paramètre ?
 
 ## E- Bonus
 
