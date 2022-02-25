@@ -73,9 +73,12 @@ void display(void)
 
 void timer(const int step)
 {
-    for (auto& item : move_queue)
+    if (!paused)
     {
-        item->move();
+        for (auto& item : move_queue)
+        {
+            item->move();
+        }
     }
     glutPostRedisplay();
     glutTimerFunc(1000u / ticks_per_sec, timer, step + 1);
@@ -113,4 +116,21 @@ void exit_loop()
     glutLeaveMainLoop();
 }
 
+void speedUp()
+{
+    ticks_per_sec++;
+}
+
+void speedDown()
+{
+    if (ticks_per_sec > 1)
+    {
+        ticks_per_sec--;
+    }
+}
+
+void stop()
+{
+    paused = !paused;
+}
 } // namespace GL

@@ -78,7 +78,7 @@ class Terminal
     is_servicing -> renvoie true tant que "service_progress" est inférieur à "SERVICE_CYCLES"
     assign_craft -> assigne une référence sur "current_aircraft".
     start_service -> affiche un message pour savoir quel avion est en train d'être servit.
-    finish_service -> affiche un message pour dire que le "current_aircraft" n'est plus servit. On change sa valeur par nullptr.
+    finish_service -> affiche un message pour dire que le "current_aircraft" a fini de faire ses trucs. On change sa valeur par nullptr.
     move -> incrémente le compteur "service_progress".
 ```
 
@@ -91,15 +91,26 @@ Expliquez les intérêts de ce choix.
 ## C- Bidouillons !
 
 1. Déterminez à quel endroit du code sont définies les vitesses maximales et accélération de chaque avion.
-   Le Concorde est censé pouvoir voler plus vite que les autres avions.
-   Modifiez le programme pour tenir compte de cela.
+
+- aircraft_types.hpp, dans init_aircraft_types.
+
+  Le Concorde est censé pouvoir voler plus vite que les autres avions.
+  Modifiez le programme pour tenir compte de cela.
 
 2. Identifiez quelle variable contrôle le framerate de la simulation.
-   Ajoutez deux nouveaux inputs au programme permettant d'augmenter ou de diminuer cette valeur.
-   Essayez maintenant de mettre en pause le programme en manipulant ce framerate. Que se passe-t-il ?\
-   Ajoutez une nouvelle fonctionnalité au programme pour mettre le programme en pause, et qui ne passe pas par le framerate.
+
+- ticks_per_sec
+
+  Ajoutez deux nouveaux inputs au programme permettant d'augmenter ou de diminuer cette valeur.
+  Essayez maintenant de mettre en pause le programme en manipulant ce framerate. Que se passe-t-il ?\
+
+  - Le jeu crash.
+
+  Ajoutez une nouvelle fonctionnalité au programme pour mettre le programme en pause, et qui ne passe pas par le framerate.
 
 3. Identifiez quelle variable contrôle le temps de débarquement des avions et doublez-le.
+
+- SERVICING_CYCLES
 
 4. Lorsqu'un avion a décollé, il réattérit peu de temps après.
    Faites en sorte qu'à la place, il soit retiré du programme.\
