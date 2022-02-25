@@ -59,8 +59,8 @@ Pour les classes `Tower`, `Aircaft`, `Airport` et `Terminal`, listez leurs fonct
 
 ```c
 class Tower
-    get_instructions
-    arrived_at_terminal
+    get_instructions ->
+    arrived_at_terminal ->
 
 class Aircraft
     get_flight_num -> renvoie le numéro de vol "flight_numer"
@@ -74,12 +74,12 @@ class Airport
     move -> applique la méthode move sur chaque terminal dans "terminals" dont Airport est owner
 
 class Terminal
-    in_use
-    is_servicing
-    assign_craft
-    start_service
-    finish_service
-    move
+    in_use -> renvoie un booleen qui vérifie que le "current_aircraft" s'il n'es pas nul.
+    is_servicing -> renvoie true tant que "service_progress" est inférieur à "SERVICE_CYCLES"
+    assign_craft -> assigne une référence sur "current_aircraft".
+    start_service -> affiche un message pour savoir quel avion est en train d'être servit.
+    finish_service -> affiche un message pour dire que le "current_aircraft" n'est plus servit. On change sa valeur par nullptr.
+    move -> incrémente le compteur "service_progress".
 ```
 
 Réalisez ensuite un schéma présentant comment ces différentes classes intéragissent ensemble.
