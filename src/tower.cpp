@@ -33,8 +33,9 @@ WaypointQueue Tower::get_instructions(Aircraft& aircraft)
             }
         }
         else
-        {
-            return get_circle();
+        { // todo found delete plane
+            // return get_circle();
+            return {};
         }
     }
     else

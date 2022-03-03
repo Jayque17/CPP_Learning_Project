@@ -116,9 +116,20 @@ Expliquez les intérêts de ce choix.
    Faites en sorte qu'à la place, il soit retiré du programme.\
    Indices :\
    A quel endroit pouvez-vous savoir que l'avion doit être supprimé ?\
-   Pourquoi n'est-il pas sûr de procéder au retrait de l'avion dans cette fonction ?
-   A quel endroit de la callstack pourriez-vous le faire à la place ?\
-   Que devez-vous modifier pour transmettre l'information de la première à la seconde fonction ?
+
+- Lorsqu'il n'y a plus de waypoint.
+
+  Pourquoi n'est-il pas sûr de procéder au retrait de l'avion dans cette fonction ?
+
+- Car il est référencé ailleur.
+
+A quel endroit de la callstack pourriez-vous le faire à la place ?\
+
+- opengl interface.
+
+Que devez-vous modifier pour transmettre l'information de la première à la seconde fonction ?
+
+- move.
 
 5. Lorsqu'un objet de type `Displayable` est créé, il faut ajouter celui-ci manuellement dans la liste des objets à afficher.
    Il faut également penser à le supprimer de cette liste avant de le détruire.
