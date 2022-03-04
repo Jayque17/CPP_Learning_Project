@@ -144,6 +144,8 @@ Que devez-vous modifier pour transmettre l'information de la première à la sec
    Cela n'est pas grave tant que ce nombre est petit, mais pour préparer l'avenir, on aimerait bien remplacer le vector par un conteneur qui garantira des opérations efficaces, même s'il y a beaucoup de terminaux.\
    Modifiez le code afin d'utiliser un conteneur STL plus adapté. Normalement, à la fin, la fonction `find_craft_and_terminal(const Aicraft&)` ne devrait plus être nécessaire.
 
+- TODO finir de remplacer le vector par la map dans tower.h et tower.cpp
+
 ## D- Théorie
 
 1. Comment a-t-on fait pour que seule la classe `Tower` puisse réserver un terminal de l'aéroport ?
