@@ -88,8 +88,10 @@ void Aircraft::add_waypoint(const Waypoint& wp, const bool front)
     }
 }
 
-void Aircraft::move()
+bool Aircraft::move()
 {
+    auto ret = true;
+
     if (waypoints.empty())
     {
         waypoints = control.get_instructions(*this);
@@ -97,6 +99,11 @@ void Aircraft::move()
 
     if (!is_at_terminal)
     {
+        if (waypoints.empty())
+        {
+            ret = false;
+        }
+
         turn_to_waypoint();
         // move in the direction of the current speed
         pos += speed;
@@ -136,6 +143,8 @@ void Aircraft::move()
         // update the z-value of the displayable structure
         GL::Displayable::z = pos.x() + pos.y();
     }
+
+    return ret;
 }
 
 void Aircraft::display() const
