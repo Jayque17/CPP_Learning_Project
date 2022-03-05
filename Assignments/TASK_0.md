@@ -104,7 +104,7 @@ Expliquez les intérêts de ce choix.
   Ajoutez deux nouveaux inputs au programme permettant d'augmenter ou de diminuer cette valeur.
   Essayez maintenant de mettre en pause le programme en manipulant ce framerate. Que se passe-t-il ?\
 
-  - Le jeu crash.
+- Le jeu crash.
 
   Ajoutez une nouvelle fonctionnalité au programme pour mettre le programme en pause, et qui ne passe pas par le framerate.
 
@@ -123,35 +123,33 @@ Expliquez les intérêts de ce choix.
 
 - Car il est référencé ailleur.
 
-A quel endroit de la callstack pourriez-vous le faire à la place ?\
+  A quel endroit de la callstack pourriez-vous le faire à la place ?\
 
 - opengl interface.
 
-Que devez-vous modifier pour transmettre l'information de la première à la seconde fonction ?
+  Que devez-vous modifier pour transmettre l'information de la première à la seconde fonction ?
 
 - move.
 
-5. Lorsqu'un objet de type `Displayable` est créé, il faut ajouter celui-ci manuellement dans la liste des objets à afficher.
-   Il faut également penser à le supprimer de cette liste avant de le détruire.
-   Faites en sorte que l'ajout et la suppression de `display_queue` soit "automatiquement gérée" lorsqu'un `Displayable` est créé ou détruit.
-   Pourquoi n'est-il pas spécialement pertinent d'en faire de même pour `DynamicObject` ?
+5. Lorsqu'un objet de type `Displayable` est créé, il faut ajouter celui-ci manuellement dans la liste des objets à afficher.Il faut également penser à le supprimer de cette liste avant de le détruire.Faites en sorte que l'ajout et la suppression de `display_queue` soit "automatiquement gérée" lorsqu'un `Displayable` est créé ou détruit.Pourquoi n'est-il pas spécialement pertinent d'en faire de même pour `DynamicObject` ?
 
-   - TODO répondre
+- TODO répondre
 
-6. La tour de contrôle a besoin de stocker pour tout `Aircraft` le `Terminal` qui lui est actuellement attribué, afin de pouvoir le libérer une fois que l'avion décolle.
-   Cette information est actuellement enregistrée dans un `std::vector<std::pair<const Aircraft*, size_t>>` (size_t représentant l'indice du terminal).
-   Cela fait que la recherche du terminal associé à un avion est réalisée en temps linéaire, par rapport au nombre total de terminaux.
-   Cela n'est pas grave tant que ce nombre est petit, mais pour préparer l'avenir, on aimerait bien remplacer le vector par un conteneur qui garantira des opérations efficaces, même s'il y a beaucoup de terminaux.\
-   Modifiez le code afin d'utiliser un conteneur STL plus adapté. Normalement, à la fin, la fonction `find_craft_and_terminal(const Aicraft&)` ne devrait plus être nécessaire.
-
-- TODO finir de remplacer le vector par la map dans tower.h et tower.cpp
+6. La tour de contrôle a besoin de stocker pour tout `Aircraft` le `Terminal` qui lui est actuellement attribué, afin de pouvoir le libérer une fois que l'avion décolle.Cette information est actuellement enregistrée dans un `std::vector<std::pair<const Aircraft*, size_t>>` (size_t représentant l'indice du terminal).Cela fait que la recherche du terminal associé à un avion est réalisée en temps linéaire, par rapport au nombre total de terminaux.Cela n'est pas grave tant que ce nombre est petit, mais pour préparer l'avenir, on aimerait bien remplacer le vector par un conteneur qui garantira des opérations efficaces, même s'il y a beaucoup de terminaux.\Modifiez le code afin d'utiliser un conteneur STL plus adapté. Normalement, à la fin, la fonction `find_craft_and_terminal(const Aicraft&)` ne devrait plus être nécessaire.
 
 ## D- Théorie
 
 1. Comment a-t-on fait pour que seule la classe `Tower` puisse réserver un terminal de l'aéroport ?
 
+- reserved_terminals est un champs privé de la classe Tower. Donc il est initialisé et est manipulé uniquement dans celle-ci. De plus, la classe n'a aucun setter public.
+
 2. En regardant le contenu de la fonction `void Aircraft::turn(Point3D direction)`, pourquoi selon-vous ne sommes-nous pas passer par une réference ?
-   Pensez-vous qu'il soit possible d'éviter la copie du `Point3D` passé en paramètre ?
+
+- Parce que la méthode cap_length() renvoie déjà une **référence sur un Point3D**.
+
+Pensez-vous qu'il soit possible d'éviter la copie du `Point3D` passé en paramètre ?
+
+- //TODO because no lo sé.
 
 ## E- Bonus
 
@@ -170,3 +168,5 @@ Passez ensuite cette valeur à la fonction `move` des `DynamicObject`, et utilis
 Vérifiez maintenant en exécutant le programme que, lorsque augmentez le framerate du programme, vous n'augmentez pas la vitesse de la simulation.
 
 Ajoutez ensuite deux nouveaux inputs permettant d'accélérer ou de ralentir la simulation.
+
+//TODO
