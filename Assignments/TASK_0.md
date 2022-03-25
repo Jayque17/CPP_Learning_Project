@@ -133,7 +133,7 @@ Expliquez les intérêts de ce choix.
 
 5. Lorsqu'un objet de type `Displayable` est créé, il faut ajouter celui-ci manuellement dans la liste des objets à afficher.Il faut également penser à le supprimer de cette liste avant de le détruire.Faites en sorte que l'ajout et la suppression de `display_queue` soit "automatiquement gérée" lorsqu'un `Displayable` est créé ou détruit.Pourquoi n'est-il pas spécialement pertinent d'en faire de même pour `DynamicObject` ?
 
-- TODO répondre
+- Comme la supression est effectuer dans timer(), qui itère sur la move_queue. Si l'on supprime l'item de cette move_queue dans le destructeur des `dynamic_object`, alors il y aura une invalidation de l'iterator utilisé par timer(). On a donc une segfault.
 
 6. La tour de contrôle a besoin de stocker pour tout `Aircraft` le `Terminal` qui lui est actuellement attribué, afin de pouvoir le libérer une fois que l'avion décolle.Cette information est actuellement enregistrée dans un `std::vector<std::pair<const Aircraft*, size_t>>` (size_t représentant l'indice du terminal).Cela fait que la recherche du terminal associé à un avion est réalisée en temps linéaire, par rapport au nombre total de terminaux.Cela n'est pas grave tant que ce nombre est petit, mais pour préparer l'avenir, on aimerait bien remplacer le vector par un conteneur qui garantira des opérations efficaces, même s'il y a beaucoup de terminaux.\Modifiez le code afin d'utiliser un conteneur STL plus adapté. Normalement, à la fin, la fonction `find_craft_and_terminal(const Aicraft&)` ne devrait plus être nécessaire.
 
@@ -147,9 +147,9 @@ Expliquez les intérêts de ce choix.
 
 - Parce que la méthode cap_length() renvoie déjà une **référence sur un Point3D**.
 
-Pensez-vous qu'il soit possible d'éviter la copie du `Point3D` passé en paramètre ?
+  Pensez-vous qu'il soit possible d'éviter la copie du `Point3D` passé en paramètre ?
 
-- //TODO because no lo sé.
+- Non car dans la méthode cap_length() le Point3D est modifié.
 
 ## E- Bonus
 

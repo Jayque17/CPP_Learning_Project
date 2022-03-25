@@ -7,7 +7,7 @@ Chaque avion créé est ensuite placé dans les files `GL::display_queue` et `GL
 
 Si à un moment quelconque du programme, vous souhaitiez accéder à l'avion ayant le numéro de vol "AF1250", que devriez-vous faire ?
 
----
+- ***
 
 ## Objectif 1 - Référencement des avions
 
@@ -16,10 +16,23 @@ Si à un moment quelconque du programme, vous souhaitiez accéder à l'avion aya
 Pour trouver un avion particulier dans le programme, ce serait pratique d'avoir une classe qui référence tous les avions et qui peut donc nous renvoyer celui qui nous intéresse.
 
 Vous avez 2 choix possibles :
+
 - créer une nouvelle classe, `AircraftManager`, qui assumera ce rôle,
 - donner ce rôle à une classe existante.
 
 Réfléchissez aux pour et contre de chacune de ces options.
+
+- POUR solution 1:
+  - On crée un classe qui n'a que cette responsabilité ce qui fait que c'est plus facile pour le débug.
+- CONTRE solution 1:
+
+  - On doit lui envoyer toutes les informations sur les avions alors que ces informations sont déjà stocker dans d'autres classe, il y a donc de la duplication que code.
+
+- POUR solution 2:
+
+  - Il n'y a pas de duplication de code. Ceci pour être gérer par la classe Aircraft.
+
+- CONTRE solution 2: - Ceci donne de nouvelles responsabilités à la classe ce qui la rend plus complexe. On perd le principe de single responsability.
 
 Pour le restant de l'exercice, vous partirez sur le premier choix.
 
@@ -29,10 +42,24 @@ Vous allez introduire une nouvelle liste de références sur les avions du progr
 Il serait donc bon de savoir qui est censé détruire les avions du programme, afin de déterminer comment vous allez pouvoir mettre à jour votre gestionnaire d'avions lorsque l'un d'entre eux disparaît.
 
 Répondez aux questions suivantes :
+
 1. Qui est responsable de détruire les avions du programme ? (si vous ne trouvez pas, faites/continuez la question 4 dans TASK_0)
+
+- opengl_interface avec la fonction timer()
+
 2. Quelles autres structures contiennent une référence sur un avion au moment où il doit être détruit ?
+
+- display_queue
+- move_queue
+
 3. Comment fait-on pour supprimer la référence sur un avion qui va être détruit dans ces structures ?
+
+- display_queue.erase(it)
+- move_queue.erase(it)
+
 4. Pourquoi n'est-il pas très judicieux d'essayer d'appliquer la même chose pour votre `AircraftManager` ?
+
+- //todo
 
 Pour simplifier le problème, vous allez déplacer l'ownership des avions dans la classe `AircraftManager`.
 Vous allez également faire en sorte que ce soit cette classe qui s'occupe de déplacer les avions, et non plus la fonction `timer`.
@@ -57,6 +84,7 @@ Testez que le programme fonctionne toujours.
 ### A - Création d'une factory
 
 La création des avions est faite à partir des composants suivants :
+
 - `create_aircraft`
 - `create_random_aircraft`
 - `airlines`

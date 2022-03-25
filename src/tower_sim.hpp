@@ -2,10 +2,12 @@
 
 class Airport;
 struct AircraftType;
+class AircraftManager;
 
 class TowerSimulation
 {
 private:
+    AircraftManager aircraftmanager();
     bool help        = false;
     Airport* airport = nullptr;
 

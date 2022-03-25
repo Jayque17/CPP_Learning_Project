@@ -2,6 +2,7 @@
 
 #include "GL/opengl_interface.hpp"
 #include "aircraft.hpp"
+#include "aircraft_manager.hpp"
 #include "airport.hpp"
 #include "config.hpp"
 #include "img/image.hpp"
