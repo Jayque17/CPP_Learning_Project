@@ -94,15 +94,19 @@ Expliquez les intérêts de ce choix.
 
 - aircraft_types.hpp, dans init_aircraft_types.
 
-  Le Concorde est censé pouvoir voler plus vite que les autres avions.
-  Modifiez le programme pour tenir compte de cela.
-
-2. Identifiez quelle variable contrôle le framerate de la simulation.
+2. Identifiez quelle variable contrôle le framerate de la simulation.\
+   Le framerate correspond au temps de rafraichissement du programme, c'est-à-dire le nombre de fois où les éléments du programme seront mis à jour (ajout de nouvel avion à la simulation, déplacement, etc) en une seconde.\
+   Ajoutez deux nouveaux inputs au programme permettant d'augmenter ou de diminuer cette valeur.
+   Essayez maintenant de mettre en pause le programme en manipulant ce framerate. Que se passe-t-il ?\
+   Ajoutez une nouvelle fonctionnalité au programme pour mettre le programme en pause, et qui ne passe pas par le framerate.
 
 - ticks_per_sec
 
-  Ajoutez deux nouveaux inputs au programme permettant d'augmenter ou de diminuer cette valeur.
-  Essayez maintenant de mettre en pause le programme en manipulant ce framerate. Que se passe-t-il ?\
+Le Concorde est censé pouvoir voler plus vite que les autres avions.
+Modifiez le programme pour tenir compte de cela.
+
+Ajoutez deux nouveaux inputs au programme permettant d'augmenter ou de diminuer cette valeur.
+Essayez maintenant de mettre en pause le programme en manipulant ce framerate. Que se passe-t-il ?\
 
 - Le jeu crash.
 
@@ -113,9 +117,13 @@ Expliquez les intérêts de ce choix.
 - SERVICING_CYCLES
 
 4. Lorsqu'un avion a décollé, il réattérit peu de temps après.
-   Faites en sorte qu'à la place, il soit retiré du programme.\
+   Assurez-vous qu'à la place, il soit supprimé de la `move_queue`.\
+   Pour tester, il suffit de dézoomer et de vérifier que les avions suffisament éloignés ne bougent plus.
    Indices :\
    A quel endroit pouvez-vous savoir que l'avion doit être supprimé ?\
+   Pourquoi n'est-il pas sûr de procéder au retrait de l'avion dans cette fonction ?
+   A quel endroit de la callstack pourriez-vous le faire à la place ?\
+   Que devez-vous modifier pour transmettre l'information de la première à la seconde fonction ?
 
 - Lorsqu'il n'y a plus de waypoint.
 
@@ -131,7 +139,11 @@ Expliquez les intérêts de ce choix.
 
 - move.
 
-5. Lorsqu'un objet de type `Displayable` est créé, il faut ajouter celui-ci manuellement dans la liste des objets à afficher.Il faut également penser à le supprimer de cette liste avant de le détruire.Faites en sorte que l'ajout et la suppression de `display_queue` soit "automatiquement gérée" lorsqu'un `Displayable` est créé ou détruit.Pourquoi n'est-il pas spécialement pertinent d'en faire de même pour `DynamicObject` ?
+5. Lorsqu'un objet de type `Displayable` est créé, il faut ajouter celui-ci manuellement dans la liste des objets à afficher.
+   Il faut également penser à le supprimer de cette liste avant de le détruire.
+   Faites en sorte que l'ajout et la suppression de `display_queue` soit "automatiquement gérée" lorsqu'un `Displayable` est créé ou détruit.\
+   Essayez maintenant de supprimer complètement l'avion du programme lorsque vous le retirez de la `move_queue`.\
+   En dézoomant, vous devriez maintenant constater que les avions disparaissent maintenant de l'écran.
 
 - Comme la supression est effectuer dans timer(), qui itère sur la move_queue. Si l'on supprime l'item de cette move_queue dans le destructeur des `dynamic_object`, alors il y aura une invalidation de l'iterator utilisé par timer(). On a donc une segfault.
 
@@ -143,7 +155,8 @@ Expliquez les intérêts de ce choix.
 
 - reserved_terminals est un champs privé de la classe Tower. Donc il est initialisé et est manipulé uniquement dans celle-ci. De plus, la classe n'a aucun setter public.
 
-2. En regardant le contenu de la fonction `void Aircraft::turn(Point3D direction)`, pourquoi selon-vous ne sommes-nous pas passer par une réference ?
+2. En regardant le contenu de la fonction `void Aircraft::turn(Point3D direction)`, pourquoi selon-vous ne sommes-nous pas passer par une réference constante ?
+   Pourquoi n'est-il pas possible d'éviter la copie du `Point3D` passé en paramètre ?
 
 - Parce que la méthode cap_length() renvoie déjà une **référence sur un Point3D**.
 
