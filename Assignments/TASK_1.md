@@ -63,21 +63,37 @@ Répondez aux questions suivantes :
 
 Pour simplifier le programme, l'`AircraftManager` aura l'ownership des avions, c'est-à-dire que c'est lui qui s'occupera de les faire disparaître du programme, et non plus la fonction `timer`. Il aura également la responsabilité de les faire bouger.
 
+- DONE
+
 ### C - C'est parti !
 
 Ajoutez un attribut `aircrafts` dans le gestionnaire d'avions.
 Choisissez un type qui met bien en avant le fait que `AircraftManager` est propriétaire des avions, et vérifiez avec votre chargé de TP qu'il s'agit de la bonne solution.
 
+- DONE
+
 Ajoutez un nouvel attribut `aircraft_manager` dans la classe `TowerSimulation`.
 
+- DONE
+
 La fonction `timer` est implémentée dans la partie GL/ du programme. Celle-ci est complètement indépendente du contenu de l'application, c'est-à-dire qu'elle ne connaît pas les types `Aircraft`, `Airport`, etc.\
-Pour conserver cette indépendence, et que `timer` puisse tout de même demander à l'`AircraftManager` de déplacer les avions, `AircraftManager` devra hériter de `DynamicObject` et être inséré dans la `move_queue`.\
+Pour conserver cette indépendence, et que `timer` puisse tout de même demander à l'`AircraftManager` de déplacer les avions, `AircraftManager` devra hériter de `DynamicObject` et être inséré dans la `move_queue`.
+
+- TODO
+
 Implémentez ensuite `AircraftManager::move` afin que qu'il déplace les avions et supprime ceux qui doivent sortir du programme.\
-N'oubliez pas de retirer les ajouts d'avions à la `move_queue`, sinon, ceux-ci seront déplacés et supprimés 2 fois (et par l'`AircraftManager`, et par `timer`).\
+N'oubliez pas de retirer les ajouts d'avions à la `move_queue`, sinon, ceux-ci seront déplacés et supprimés 2 fois (et par l'`AircraftManager`, et par `timer`).
+
+- DONE
+
 Vous pouvez maintenant supprimer la relation d'héritage entre `Aircraft` et `DynamicObject`, puisse que le seul intérêt à être un `DynamicObject`, c'est de pouvoir être placé dans la `move_queue` pour être mis à jour par `timer`.
+
+- DONE
 
 Enfin, faites ce qu'il faut pour que `create_aircraft` donne l'avion qu'elle crée au gestionnaire.
 Testez que le programme fonctionne toujours.
+
+- DONE
 
 ---
 

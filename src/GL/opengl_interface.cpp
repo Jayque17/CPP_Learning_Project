@@ -78,6 +78,7 @@ void timer(const int step)
         for (auto it = move_queue.begin(); it != move_queue.end();)
         {
             auto item = *it;
+
             if (item->move() == false)
             {
                 it = move_queue.erase(it);
@@ -142,4 +143,4 @@ void stop()
 {
     paused = !paused;
 }
-} // namespace GL
+}
