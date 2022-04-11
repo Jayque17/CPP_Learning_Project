@@ -146,11 +146,11 @@ Essayez de supprimer au maximum les pointeurs nus, et de les remplacer par des t
 Il est rare, mais possible, que deux avions soient créés avec le même numéro de vol.
 Ajoutez un conteneur dans votre classe `AircraftFactory` contenant tous les numéros de vol déjà utilisés.
 
-- TODO
+- DONE
 
 Faites maintenant en sorte qu'il ne soit plus possible de créer deux fois un avion avec le même numéro de vol.
 
-- TODO
+- DONE
 
 ### C - Data-driven AircraftType (optionnel)
 

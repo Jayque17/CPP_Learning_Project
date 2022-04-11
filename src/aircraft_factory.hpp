@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <set>
 #include <string>
 
 class Airport;
@@ -15,6 +16,7 @@ private:
     const std::string airlines[8] = { "AF", "LH", "EY", "DL", "KL", "BA", "AY", "EY" };
     AircraftType* aircraft_types[NUM_AIRCRAFT_TYPES] {};
     void init_aircraft_types();
+    mutable std::set<std::string> flight_numbers {};
 
 public:
     std::unique_ptr<Aircraft> create_aircraft(Airport* airport, const AircraftType& type) const;
