@@ -36,9 +36,33 @@ void TowerSimulation::create_keystrokes()
     GL::keystrokes.emplace('+', []() { GL::change_zoom(0.95f); });
     GL::keystrokes.emplace('-', []() { GL::change_zoom(1.05f); });
     GL::keystrokes.emplace('f', []() { GL::toggle_fullscreen(); });
-    GL::keystrokes.emplace('8', []() { GL::speedUp(); });
-    GL::keystrokes.emplace('2', []() { GL::speedDown(); });
-    GL::keystrokes.emplace('5', []() { GL::stop(); });
+    GL::keystrokes.emplace('u', []() { GL::speedUp(); });
+    GL::keystrokes.emplace('d', []() { GL::speedDown(); });
+    GL::keystrokes.emplace('p', []() { GL::stop(); });
+    GL::keystrokes.emplace(
+        '0', [this]()
+        { aircraft_manager.display_aircrafts_by_airlines(0, aircraft_factory.get_airline_name(0)); });
+    GL::keystrokes.emplace(
+        '1', [this]()
+        { aircraft_manager.display_aircrafts_by_airlines(1, aircraft_factory.get_airline_name(1)); });
+    GL::keystrokes.emplace(
+        '2', [this]()
+        { aircraft_manager.display_aircrafts_by_airlines(2, aircraft_factory.get_airline_name(2)); });
+    GL::keystrokes.emplace(
+        '3', [this]()
+        { aircraft_manager.display_aircrafts_by_airlines(3, aircraft_factory.get_airline_name(3)); });
+    GL::keystrokes.emplace(
+        '4', [this]()
+        { aircraft_manager.display_aircrafts_by_airlines(4, aircraft_factory.get_airline_name(4)); });
+    GL::keystrokes.emplace(
+        '5', [this]()
+        { aircraft_manager.display_aircrafts_by_airlines(5, aircraft_factory.get_airline_name(5)); });
+    GL::keystrokes.emplace(
+        '6', [this]()
+        { aircraft_manager.display_aircrafts_by_airlines(6, aircraft_factory.get_airline_name(6)); });
+    GL::keystrokes.emplace(
+        '7', [this]()
+        { aircraft_manager.display_aircrafts_by_airlines(7, aircraft_factory.get_airline_name(7)); });
 }
 
 void TowerSimulation::display_help() const
@@ -46,9 +70,9 @@ void TowerSimulation::display_help() const
     std::cout << "This is an airport tower simulator" << std::endl
               << "the following keysstrokes have meaning:" << std::endl;
 
-    for (const auto& ks_pair : GL::keystrokes)
+    for (const auto& [key, value] : GL::keystrokes)
     {
-        std::cout << ks_pair.first << ' ';
+        std::cout << key << ' ';
     }
 
     std::cout << std::endl;
