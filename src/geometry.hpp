@@ -5,7 +5,7 @@
 #include <cassert>
 #include <cmath>
 #include <iostream>
-
+#include <numeric>
 struct Point2D
 {
     float values[2] {};
@@ -64,7 +64,8 @@ struct Point2D
 
 struct Point3D
 {
-    float values[3] {};
+    // float values[3] {};
+    std::array<float, 3> values;
 
     Point3D() {}
     Point3D(float x, float y, float z) : values { x, y, z } {}
@@ -78,27 +79,46 @@ struct Point3D
     float& z() { return values[2]; }
     float z() const { return values[2]; }
 
+    std::array<float, 3>& get_values() { return values; }
+    std::array<float, 3> get_values() const { return values; }
+
     Point3D& operator+=(const Point3D& other)
     {
-        x() += other.x();
-        y() += other.y();
-        z() += other.z();
+        std::array<float, 3> new_values;
+        std::transform(values.begin(), values.end(), other.get_values().begin(), new_values.begin(),
+                       [](float& val1, float& val2) { return val1 + val2; });
+        values = new_values;
         return *this;
     }
 
     Point3D& operator-=(const Point3D& other)
     {
-        x() -= other.x();
-        y() -= other.y();
-        z() -= other.z();
+        // x() -= other.x();
+        // y() -= other.y();
+        // z() -= other.z();
+        // return *this;
+
+        std::array<float, 3> new_values;
+        std::transform(values.begin(), values.end(), other.get_values().begin(), new_values.begin(),
+                       [](float& val1, float& val2) { return val1 - val2; });
+        values = new_values;
         return *this;
     }
 
     Point3D& operator*=(const float scalar)
     {
-        x() *= scalar;
-        y() *= scalar;
-        z() *= scalar;
+        // x() *= scalar;
+        // y() *= scalar;
+        // z() *= scalar;
+
+        std::for_each(values.begin(), values.end(),
+                      [scalar](float& val)
+                      {
+                          //   if (val != 0 && scalar != 0)
+                          //   {
+                          val *= scalar;
+                          //}
+                      });
         return *this;
     }
 
