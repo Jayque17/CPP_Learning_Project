@@ -12,6 +12,8 @@ class AircraftManager : public GL::DynamicObject
 {
 private:
     std::vector<std::unique_ptr<Aircraft>> aircrafts = std::vector<std::unique_ptr<Aircraft>>();
+    static bool compare_reserved_terminal_then_fuel_quantity(const std::unique_ptr<Aircraft>& aircraft1,
+                                                             const std::unique_ptr<Aircraft>& aircraft2);
 
 public:
     void add(std::unique_ptr<Aircraft> aircraft);

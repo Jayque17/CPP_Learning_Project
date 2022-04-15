@@ -23,8 +23,6 @@ Si vous ne savez plus ce qu'est un structured binding, le [chapitre 6](https://l
 
 ### C - Relooking de Point3D
 
-//`BLOQUÉ`
-
 La classe `Point3D` présente beaucoup d'opportunités d'appliquer des algorithmes.
 Particulièrement, des formulations de type `x() = ...; y() = ...; z() = ...;` se remplacent par un seul appel à la bonne fonction de la librairie standard.
 Remplacez le tableau `Point3D::values` par un `std::array` et puis,

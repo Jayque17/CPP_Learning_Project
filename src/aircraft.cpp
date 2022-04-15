@@ -2,7 +2,11 @@
 
 #include "GL/opengl_interface.hpp"
 
+#include <algorithm>
 #include <cmath>
+#include <cstdlib>
+#include <ctime>
+#include <iterator>
 
 void Aircraft::turn_to_waypoint()
 {
@@ -92,6 +96,16 @@ bool Aircraft::move()
 {
     auto ret = true;
 
+    if (is_circling() && !serve)
+    {
+        auto tmp_waypoints = control.reserve_terminal(*this);
+        if (!tmp_waypoints.empty())
+        {
+            std::copy(tmp_waypoints.begin(), tmp_waypoints.end(), std::back_inserter(waypoints));
+            // waypoints = tmp_waypoints;
+        }
+    }
+
     if (waypoints.empty())
     {
         waypoints = control.get_instructions(*this);
@@ -114,6 +128,7 @@ bool Aircraft::move()
             if (waypoints.front().is_at_terminal())
             {
                 arrive_at_terminal();
+                serve = true;
             }
             else
             {
@@ -134,6 +149,12 @@ bool Aircraft::move()
         {
             // if we are in the air, but too slow, then we will sink!
             const float speed_len = speed.length();
+
+            if (fuel > 0)
+            {
+                fuel -= 1;
+            }
+
             if (speed_len < SPEED_THRESHOLD)
             {
                 pos.z() -= SINK_FACTOR * (SPEED_THRESHOLD - speed_len);
@@ -150,4 +171,29 @@ bool Aircraft::move()
 void Aircraft::display() const
 {
     type.texture.draw(project_2D(pos), { PLANE_TEXTURE_DIM, PLANE_TEXTURE_DIM }, get_speed_octant());
+}
+
+void Aircraft::init_fuel(int min, int max)
+{
+    std::srand(std::time(nullptr));
+    fuel = std::rand() % (max - min + 1) + min;
+}
+
+int Aircraft::check_fuel() const
+{
+    if (fuel == 0)
+    {
+        std::cout << flight_number << " has no fuel anymore" << std::endl
+                  << flight_number << " has CRASHED" << std::endl;
+    }
+    return fuel;
+}
+
+bool Aircraft::has_terminal() const
+{
+    return !waypoints.empty() && waypoints.back().is_at_terminal();
+}
+bool Aircraft::is_circling() const
+{
+    return !has_terminal() && !is_at_terminal;
 }

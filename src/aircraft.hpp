@@ -20,6 +20,8 @@ private:
     Tower& control;
     bool landing_gear_deployed = false; // is the landing gear deployed?
     bool is_at_terminal        = false;
+    int fuel                   = 0;
+    bool serve                 = false;
 
     // turn the aircraft to arrive at the next waypoint
     // try to facilitate reaching the waypoint after the next by facing the
@@ -40,7 +42,7 @@ private:
     void add_waypoint(const Waypoint& wp, const bool front);
     bool is_on_ground() const { return pos.z() < DISTANCE_THRESHOLD; }
     float max_speed() const { return is_on_ground() ? type.max_ground_speed : type.max_air_speed; }
-
+    void init_fuel(int min, int max);
     Aircraft(const Aircraft&) = delete;
     Aircraft& operator=(const Aircraft&) = delete;
 
@@ -55,6 +57,8 @@ public:
         control { control_ }
     {
         speed.cap_length(max_speed());
+        init_fuel(100, 1000);
+        std::cout << "fuel " << flight_number << " : " << fuel << std::endl;
     }
 
     const std::string& get_flight_num() const { return flight_number; }
@@ -62,6 +66,11 @@ public:
 
     void display() const override;
     bool move() override;
+
+    int check_fuel() const;
+
+    bool has_terminal() const;
+    bool is_circling() const;
 
     friend class Tower;
 };
