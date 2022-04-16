@@ -1,7 +1,7 @@
 #include "aircraft_manager.hpp"
 
 #include <algorithm>
-#include <ostream>
+#include <numeric>
 
 void AircraftManager::add(std::unique_ptr<Aircraft> aircraft)
 {
@@ -44,4 +44,26 @@ bool AircraftManager::compare_reserved_terminal_then_fuel_quantity(const std::un
     }
 
     return false;
+}
+
+int AircraftManager::get_required_fuel()
+{
+    // if ((*aircraft).check_fuel() < (*aircraft).get_min_fuel() && (*aircraft).check_is_at_terminal())
+    // {
+    //     return (*aircraft).get_max_fuel() - (*aircraft).check_fuel();
+    // }
+
+    // return 0;
+
+    return std::transform_reduce(
+        aircrafts.begin(), aircrafts.end(), 0, [](int val1, int val2) { return val1 + val2; },
+        [](const std::unique_ptr<Aircraft>& aircraft)
+        {
+            if ((*aircraft).check_fuel() < (*aircraft).get_min_fuel() && (*aircraft).check_is_at_terminal())
+            {
+                return (*aircraft).get_max_fuel() - (*aircraft).check_fuel();
+            }
+
+            return 0;
+        });
 }

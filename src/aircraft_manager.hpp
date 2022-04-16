@@ -19,4 +19,5 @@ public:
     void add(std::unique_ptr<Aircraft> aircraft);
     bool move() override;
     void display_aircrafts_by_airlines(int airline, std::string airline_name);
+    int get_required_fuel();
 };

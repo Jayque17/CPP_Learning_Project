@@ -20,7 +20,9 @@ private:
     Tower& control;
     bool landing_gear_deployed = false; // is the landing gear deployed?
     bool is_at_terminal        = false;
-    int fuel                   = 0;
+    int current_fuel           = 0;
+    int min_fuel               = 50;
+    int max_fuel               = 200;
     bool serve                 = false;
 
     // turn the aircraft to arrive at the next waypoint
@@ -57,8 +59,8 @@ public:
         control { control_ }
     {
         speed.cap_length(max_speed());
-        init_fuel(100, 1000);
-        std::cout << "fuel " << flight_number << " : " << fuel << std::endl;
+        init_fuel(min_fuel, max_fuel);
+        std::cout << "fuel " << flight_number << " : " << current_fuel << std::endl;
     }
 
     const std::string& get_flight_num() const { return flight_number; }
@@ -71,6 +73,14 @@ public:
 
     bool has_terminal() const;
     bool is_circling() const;
+
+    bool is_low_on_fuel() const;
+
+    int get_min_fuel();
+    int get_max_fuel();
+    bool check_is_at_terminal() const;
+
+    void refill(int& fuel_stock);
 
     friend class Tower;
 };

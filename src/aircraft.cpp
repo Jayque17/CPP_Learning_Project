@@ -150,9 +150,9 @@ bool Aircraft::move()
             // if we are in the air, but too slow, then we will sink!
             const float speed_len = speed.length();
 
-            if (fuel > 0)
+            if (current_fuel > 0)
             {
-                fuel -= 1;
+                current_fuel -= 1;
             }
 
             if (speed_len < SPEED_THRESHOLD)
@@ -176,24 +176,61 @@ void Aircraft::display() const
 void Aircraft::init_fuel(int min, int max)
 {
     std::srand(std::time(nullptr));
-    fuel = std::rand() % (max - min + 1) + min;
+    current_fuel = std::rand() % (max - min + 1) + min;
 }
 
 int Aircraft::check_fuel() const
 {
-    if (fuel == 0)
+    if (current_fuel == 0)
     {
         std::cout << flight_number << " has no fuel anymore" << std::endl
                   << flight_number << " has CRASHED" << std::endl;
     }
-    return fuel;
+    return current_fuel;
 }
 
 bool Aircraft::has_terminal() const
 {
     return !waypoints.empty() && waypoints.back().is_at_terminal();
 }
+
 bool Aircraft::is_circling() const
 {
     return !has_terminal() && !is_at_terminal;
+}
+
+bool Aircraft::is_low_on_fuel() const
+{
+    return current_fuel < min_fuel;
+}
+
+int Aircraft::get_max_fuel()
+{
+    return max_fuel;
+}
+
+int Aircraft::get_min_fuel()
+{
+    return min_fuel;
+}
+
+bool Aircraft::check_is_at_terminal() const
+{
+    return is_at_terminal;
+}
+
+void Aircraft::refill(int& fuel_stock)
+{
+    if (fuel_stock > 0)
+    {
+        auto need = max_fuel - check_fuel();
+        if (need > fuel_stock)
+        {
+            need = fuel_stock;
+        }
+
+        current_fuel += need;
+        fuel_stock -= need;
+        std::cout << need << " L of fuel were used for " << flight_number << std::endl;
+    }
 }
