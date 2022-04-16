@@ -102,7 +102,6 @@ bool Aircraft::move()
         if (!tmp_waypoints.empty())
         {
             std::copy(tmp_waypoints.begin(), tmp_waypoints.end(), std::back_inserter(waypoints));
-            // waypoints = tmp_waypoints;
         }
     }
 

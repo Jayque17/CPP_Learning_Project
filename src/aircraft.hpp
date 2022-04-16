@@ -21,8 +21,8 @@ private:
     bool landing_gear_deployed = false; // is the landing gear deployed?
     bool is_at_terminal        = false;
     int current_fuel           = 0;
-    int min_fuel               = 50;
-    int max_fuel               = 200;
+    int min_fuel               = 200;
+    int max_fuel               = 3000;
     bool serve                 = false;
 
     // turn the aircraft to arrive at the next waypoint
@@ -61,6 +61,14 @@ public:
         speed.cap_length(max_speed());
         init_fuel(min_fuel, max_fuel);
         std::cout << "fuel " << flight_number << " : " << current_fuel << std::endl;
+    }
+
+    ~Aircraft()
+    {
+        if (has_terminal())
+        {
+            control.free_terminal(flight_number);
+        }
     }
 
     const std::string& get_flight_num() const { return flight_number; }

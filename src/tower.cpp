@@ -3,6 +3,7 @@
 #include "airport.hpp"
 #include "terminal.hpp"
 
+#include <algorithm>
 #include <cassert>
 
 WaypointQueue Tower::get_circle() const
@@ -79,4 +80,23 @@ WaypointQueue Tower::reserve_terminal(Aircraft& aircraft)
     }
 
     return {};
+}
+
+void Tower::free_terminal(std::string flight_number)
+{
+    if (!reserved_terminals.empty())
+    {
+        auto it = std::find_if(reserved_terminals.begin(), reserved_terminals.end(),
+                               [flight_number](std::pair<const Aircraft* const, long unsigned int> rt)
+                               {
+                                   auto aircraft = rt.first;
+                                   if (aircraft != nullptr)
+                                   {
+                                       return (*aircraft).get_flight_num().compare(flight_number) == 0;
+                                   }
+                                   return false;
+                               });
+
+        reserved_terminals.erase(it);
+    }
 }
