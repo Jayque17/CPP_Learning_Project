@@ -80,7 +80,7 @@ public:
             std::cout << "fuel delivered: " << ordered_fuel << std::endl;
 
             ordered_fuel     = std::min(aircraft_manager.get_required_fuel(), 5000);
-            next_refill_time = 100;
+            next_refill_time = 10;
 
             std::cout << "fuel in stock: " << fuel_stock << std::endl
                       << "ordered fuel: " << ordered_fuel << std::endl;

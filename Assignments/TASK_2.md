@@ -138,8 +138,6 @@ En effet, lorsque les avions se crashent alors qu'ils avaient un terminal de ré
 
 Pour garantir cela, vous allez modifier le destructeur de `Aircraft`. Si l'avion a réservé un terminal, assurez-vous que celui-ci est correctement libéré. Pour cela, vous aurez besoin de rajouter une fonction dans la classe `Tower`. Choisissez-lui un nom qui décrit correctement ce qu'elle fait.
 
-//WHY ÇA FONCTIONNE PAS
-
 ### F - Paramétrage (optionnel)
 
 Pour le moment, tous les avions ont la même consommation d'essence (1 unité / trame) et la même taille de réservoir (`3'000`).

@@ -68,15 +68,13 @@ void Tower::arrived_at_terminal(const Aircraft& aircraft)
 
 WaypointQueue Tower::reserve_terminal(Aircraft& aircraft)
 { // if the aircraft is far, then just guide it to the airport vicinity
-    if (aircraft.distance_to(airport.pos) < 5)
+
+    // try and reserve a terminal for the craft to land
+    const auto vp = airport.reserve_terminal(aircraft);
+    if (!vp.first.empty())
     {
-        // try and reserve a terminal for the craft to land
-        const auto vp = airport.reserve_terminal(aircraft);
-        if (!vp.first.empty())
-        {
-            reserved_terminals[&aircraft] = vp.second;
-            return vp.first;
-        }
+        reserved_terminals[&aircraft] = vp.second;
+        return vp.first;
     }
 
     return {};
@@ -84,6 +82,7 @@ WaypointQueue Tower::reserve_terminal(Aircraft& aircraft)
 
 void Tower::free_terminal(std::string flight_number)
 {
+    std::cout << "reserved term : " << reserved_terminals.size() << std::endl;
     if (!reserved_terminals.empty())
     {
         auto it = std::find_if(reserved_terminals.begin(), reserved_terminals.end(),
@@ -97,6 +96,7 @@ void Tower::free_terminal(std::string flight_number)
                                    return false;
                                });
 
+        airport.get_terminal(it->second).finish_service();
         reserved_terminals.erase(it);
     }
 }
