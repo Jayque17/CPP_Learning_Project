@@ -24,6 +24,7 @@ add_executable(tower
 	src/airport.hpp
 	src/config.hpp
 	src/geometry.hpp
+	src/point.hpp
 	src/runway.hpp
 	src/terminal.hpp
 	src/tower_sim.cpp
