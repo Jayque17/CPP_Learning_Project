@@ -1,6 +1,11 @@
 #pragma once
 
+#include <algorithm>
 #include <array>
+#include <cmath>
+#include <iostream>
+#include <numeric>
+#include <ostream>
 
 template <int NbCoord, typename NumericType> class Point
 {
@@ -9,9 +14,10 @@ private:
 
 public:
     Point() {}
+    Point(NumericType coords...) : values { coords } {}
 
     NumericType& selected_coord(int position) { return values[position]; }
-    NumericType const selected_coord(int position) { return values[position]; }
+    // NumericType const selected_coord(int position) { return values[position]; }
 
     std::array<NumericType, NbCoord>& get_values() { return values; }
     std::array<NumericType, NbCoord> get_values() const { return values; }
@@ -89,4 +95,27 @@ public:
 
     Point<NbCoord, NumericType>& normalize() {};
     Point<NbCoord, NumericType>& cap_lentgh() {};
+
+    std::ostream& operator<<(const Point<NbCoord, NumericType>& point)
+    {
+        std::ostream os;
+        os << "(";
+        std::for_each(point.get_values().begin(), point.get_values().last(),
+                      [os](NumericType val) { os << val << " "; });
+        os << ")" << std::endl;
+        return os;
+    }
+};
+
+void test_generic_points()
+{
+    Point<3, int> p1(1, 2, 3);
+    Point<3, int> p2(4, 5, 6);
+    auto p3 = p1 + p2;
+    p1 += p2;
+    p1 *= 3;
+
+    std::cout << p1.length() << std::endl;
+    std::cout << p2.length() << std::endl;
+    std::cout << p3.length() << std::endl;
 };
