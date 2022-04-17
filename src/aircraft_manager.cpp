@@ -5,6 +5,7 @@
 
 void AircraftManager::add(std::unique_ptr<Aircraft> aircraft)
 {
+    assert(aircraft);
     aircrafts.emplace_back(std::move(aircraft));
 }
 

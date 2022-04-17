@@ -21,7 +21,11 @@ public:
 
     bool in_use() const { return current_aircraft != nullptr; }
     bool is_servicing() const { return service_progress < SERVICE_CYCLES; }
-    void assign_craft(Aircraft& aircraft) { current_aircraft = &aircraft; }
+    void assign_craft(Aircraft& aircraft)
+    {
+        assert(!in_use());
+        current_aircraft = &aircraft;
+    }
 
     void start_service(const Aircraft& aircraft)
     {
@@ -32,6 +36,7 @@ public:
 
     void finish_service()
     {
+        assert(in_use());
         if (!is_servicing())
         {
             std::cout << "done servicing " << current_aircraft->get_flight_num() << '\n';

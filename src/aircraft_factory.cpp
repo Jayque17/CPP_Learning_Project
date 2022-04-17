@@ -10,7 +10,6 @@
 std::unique_ptr<Aircraft> AircraftFactory::create_aircraft(Airport* airport, const AircraftType& type) const
 {
     assert(airport); // make sure the airport is initialized before creating aircraft
-
     std::string flight_number;
     do
     {
@@ -27,6 +26,7 @@ std::unique_ptr<Aircraft> AircraftFactory::create_aircraft(Airport* airport, con
 
 std::unique_ptr<Aircraft> AircraftFactory::create_random_aircraft(Airport* airport) const
 {
+    assert(airport);
     return create_aircraft(airport, *(aircraft_types[rand() % 3]));
 }
 

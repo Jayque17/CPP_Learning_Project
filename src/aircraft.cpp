@@ -50,6 +50,7 @@ unsigned int Aircraft::get_speed_octant() const
 // when we arrive at a terminal, signal the tower
 void Aircraft::arrive_at_terminal()
 {
+    assert(is_on_ground() && has_terminal());
     // we arrived at a terminal, so start servicing
     control.arrived_at_terminal(*this);
     is_at_terminal = true;
@@ -220,16 +221,14 @@ bool Aircraft::check_is_at_terminal() const
 
 void Aircraft::refill(int& fuel_stock)
 {
-    if (fuel_stock > 0)
+    assert(is_low_on_fuel());
+    auto need = max_fuel - check_fuel();
+    if (need > fuel_stock)
     {
-        auto need = max_fuel - check_fuel();
-        if (need > fuel_stock)
-        {
-            need = fuel_stock;
-        }
-
-        current_fuel += need;
-        fuel_stock -= need;
-        std::cout << need << " L of fuel were used for " << flight_number << std::endl;
+        need = fuel_stock;
     }
+
+    current_fuel += need;
+    fuel_stock -= need;
+    std::cout << need << " L of fuel were used for " << flight_number << std::endl;
 }

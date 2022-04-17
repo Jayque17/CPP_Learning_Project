@@ -95,6 +95,7 @@ void TowerSimulation::launch()
     }
 
     init_airport();
+    assert(airport);
 
     GL::loop();
 }
