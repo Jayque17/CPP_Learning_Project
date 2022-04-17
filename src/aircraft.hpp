@@ -24,6 +24,7 @@ private:
     int min_fuel               = 200;
     int max_fuel               = 3000;
     bool serve                 = false;
+    bool crash_cause_of_fuel   = true;
 
     // turn the aircraft to arrive at the next waypoint
     // try to facilitate reaching the waypoint after the next by facing the

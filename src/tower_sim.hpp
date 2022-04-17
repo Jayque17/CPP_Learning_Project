@@ -43,4 +43,5 @@ public:
     ~TowerSimulation();
 
     void launch();
+    void display_crash_counter();
 };

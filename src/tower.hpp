@@ -29,6 +29,8 @@ private:
         return reserved_terminals.find(&aircraft);
     }
 
+    int aircraft_crash_cause_of_fuel = 0;
+
 public:
     Tower(Airport& airport_) : airport { airport_ } {}
 
@@ -38,4 +40,6 @@ public:
 
     WaypointQueue reserve_terminal(Aircraft& aircraft);
     void free_terminal(std::string flight_number);
+
+    int get_crash() const;
 };

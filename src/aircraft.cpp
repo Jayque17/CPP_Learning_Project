@@ -182,8 +182,8 @@ int Aircraft::check_fuel() const
 {
     if (current_fuel == 0)
     {
-        std::cout << flight_number << " has no fuel anymore" << std::endl
-                  << flight_number << " has CRASHED" << std::endl;
+        using namespace std::string_literals;
+        throw AircraftCrash { flight_number + " crashed because of fuel issue"s };
     }
     return current_fuel;
 }

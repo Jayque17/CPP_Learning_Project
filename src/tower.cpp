@@ -98,5 +98,11 @@ void Tower::free_terminal(std::string flight_number)
 
         airport.get_terminal(it->second).finish_service();
         reserved_terminals.erase(it);
+        aircraft_crash_cause_of_fuel += 1;
     }
+}
+
+int Tower::get_crash() const
+{
+    return aircraft_crash_cause_of_fuel;
 }

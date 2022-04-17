@@ -63,6 +63,7 @@ void TowerSimulation::create_keystrokes()
     GL::keystrokes.emplace(
         '7', [this]()
         { aircraft_manager.display_aircrafts_by_airlines(7, aircraft_factory.get_airline_name(7)); });
+    GL::keystrokes.emplace('m', [this]() { display_crash_counter(); });
 }
 
 void TowerSimulation::display_help() const
@@ -96,4 +97,11 @@ void TowerSimulation::launch()
     init_airport();
 
     GL::loop();
+}
+
+void TowerSimulation::display_crash_counter()
+{
+    std::cout << "Aircrafts which crashed into the ground: " << aircraft_manager.get_crash() << std::endl
+              << "Aircrafts which crashed because of fuel issue: " << airport->get_tower().get_crash()
+              << std::endl;
 }

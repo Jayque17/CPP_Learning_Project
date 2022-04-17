@@ -14,10 +14,12 @@ private:
     std::vector<std::unique_ptr<Aircraft>> aircrafts = std::vector<std::unique_ptr<Aircraft>>();
     static bool compare_reserved_terminal_then_fuel_quantity(const std::unique_ptr<Aircraft>& aircraft1,
                                                              const std::unique_ptr<Aircraft>& aircraft2);
+    int aircraft_crash_on_ground = 0;
 
 public:
     void add(std::unique_ptr<Aircraft> aircraft);
     bool move() override;
     void display_aircrafts_by_airlines(int airline, std::string airline_name);
     int get_required_fuel();
+    int get_crash() const;
 };
